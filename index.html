@@ -31,6 +31,27 @@ input, button {
     width: 80%;
     margin-top: 10px;
 }
+
+.button-link {
+    display: inline-block;
+    padding: 10px 16px;
+    background: #2563eb;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-top: 12px;
+}
+
+#apagarBtn {
+    display: none;
+    margin-top: 12px;
+    padding: 10px 16px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
 </style>
 </head>
 
@@ -40,15 +61,56 @@ input, button {
 
 <h2>🌡 estufa.io</h2>
 
+<!-- INFO ARRIBA -->
 <div class="temp" id="temp">--</div>
 <div id="clima">--</div>
-<form action="estufa.php" action="$POST">
+
+<form action="estufa.php" method="post">
     
 <br>
 
-<button>Encender/actualizar estufa</button>
+<button type="submit">Encender/actualizar estufa</button>
 </form>
 
+<!-- APAGAR / INFO ABAJO -->
+<div id="bottom-area" style="margin-top:18px;">
+    <button id="apagarBtn">Apagar estufa</button>
 </div>
+
+</div>
+
+<script>
+(function(){
+    const params = new URLSearchParams(window.location.search);
+    const temperatura = params.get('temperatura');
+    const localidad = params.get('localidad');
+    const clima = params.get('clima');
+    const estado = params.get('estado'); // opcional
+
+    if (temperatura || localidad || clima) {
+        // mostrar arriba
+        const tempEl = document.getElementById('temp');
+        const climaEl = document.getElementById('clima');
+        tempEl.textContent = temperatura ? temperatura + '°' : '--';
+        climaEl.textContent = (localidad ? localidad + ' - ' : '') + (clima || '--');
+
+        // mostrar boton apagar y info abajo (duplicada)
+        document.getElementById('apagarBtn').style.display = 'inline-block';
+        // document.getElementById('bottom-info').textContent = climaEl.textContent;
+
+        // onclick del boton redirige a estufa.php para "apagar" pasando datos
+        document.getElementById('apagarBtn').addEventListener('click', function(){
+            const qs = new URLSearchParams();
+            qs.set('accion','apagar');
+            if (localidad) qs.set('localidad', localidad);
+            if (temperatura) qs.set('temperatura', temperatura);
+            if (clima) qs.set('clima', clima);
+            // redirige a estufa.php para procesar apagado
+            window.location.href = 'estufa.php?' + qs.toString();
+        });
+    }
+})();
+</script>
+
 </body>
 </html>

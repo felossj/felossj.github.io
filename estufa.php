@@ -21,7 +21,7 @@ $conexion->query("
     )
 ");
 
-// PROCESAR FORMULARIO
+// PROCESAR FORMULARIO (POST PARA GUARDAR)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!empty($_POST['temperatura']) && !empty($_POST['localidad']) && !empty($_POST['clima'])) {
@@ -39,6 +39,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             die("Error SQL: " . $conexion->error);
         }
+    }
+}
+
+// PROCESAR ACCIÓN DE APAGAR VIA GET
+if (isset($_GET['accion']) && $_GET['accion'] === 'apagar') {
+    $localidad = isset($_GET['localidad']) ? htmlspecialchars($_GET['localidad'], ENT_QUOTES, 'UTF-8') : null;
+    $clima = 'Apagado';
+    $temperatura = 0;
+
+    $stmt = $conexion->prepare("INSERT INTO registros (localidad, temperatura, clima) VALUES (?, ?, ?)");
+    if ($stmt) {
+        $stmt->bind_param("sis", $localidad, $temperatura, $clima);
+        $stmt->execute();
+        $stmt->close();
     }
 }
 ?>
@@ -75,6 +89,16 @@ input {
     margin-top: 10px;
     box-sizing: border-box;
 }
+
+.button-link {
+    display: inline-block;
+    padding: 10px 16px;
+    background: #10b981;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-top: 12px;
+}
 </style>
 </head>
 <body>
@@ -109,6 +133,22 @@ input {
 
         <input type="submit" value="Guardar">
     </form>
+
+    <!-- BOTÓN VOLVER AL INICIO con parámetros para que index muestre la info -->
+    <?php
+        // Construir query string segura
+        $qs = http_build_query([
+            'temperatura' => $temperatura,
+            'localidad' => $localidad,
+            'clima' => $clima,
+            'estado' => ($clima === 'Apagado' ? 'off' : 'on')
+        ]);
+        $href = "index.html?" . $qs;
+    ?>
+    <div>
+        <a class="button-link" href="<?php echo htmlspecialchars($href, ENT_QUOTES, 'UTF-8'); ?>">Volver al inicio</a>
+    </div>
+
 </div>
 
 </body>
