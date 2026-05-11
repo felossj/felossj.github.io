@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Clima Caseros</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+    text-align: center;
+    padding: 50px;
+}
+
+.card {
+    background: #1e293b;
+    width: 350px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.temp {
+    font-size: 50px;
+    margin: 10px 0;
+}
+
+input, button {
+    padding: 10px;
+    width: 80%;
+    margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>🌡 Clima Caseros</h2>
+
+<div class="temp" id="temp">--</div>
+<div id="clima">--</div>
+<form action="estufa.php" action="$POST">
+
+    <input type="number" id="temperatura" placeholder="Nueva temperatura">
+
+<br>
+
+<button>Actualizar</button>
+</form>
+
+
+</div>
+
+
+
+</body>
+</html>
