@@ -80,16 +80,20 @@ input {
 <body>
 
 <div class="card">
-    <h2>🌡 Clima</h2>
+    <h2>🌡 estufa.io</h2>
 
     <div class="temp">
         <?php echo $temperatura !== null ? $temperatura . '°' : '--'; ?>
     </div>
-
+    <div>
+        <?php
+            echo "Calefaccionando";
+        ?>
+    </div>
     <div>
         <?php 
         if ($localidad && $clima) {
-            echo "$localidad - $clima";
+            echo "Local: $localidad °C - $clima";
         } else {
             echo "--";
         }
@@ -97,9 +101,9 @@ input {
     </div>
 
     <form action="" method="post">
-        <input type="text" name="localidad" placeholder="Localidad" required>
+        <input type="text" name="localidad" placeholder="Temperatura ambiente en su localidad" required>
 
-        <input type="number" name="temperatura" placeholder="Temperatura" required>
+        <input type="number" name="temperatura" placeholder="Temperatura a alcanzar (°C)" required>
 
         <input type="text" name="clima" placeholder="Clima (Soleado, Nublado...)" required>
 
