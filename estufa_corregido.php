@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>estufa.io</title>
+<title>Clima Caseros</title>
 <style>
 body {
     font-family: Arial, sans-serif;
@@ -80,7 +80,7 @@ input {
 <body>
 
 <div class="card">
-    <h2>🌡 Clima</h2>
+    <h2>🌡 Clima Caseros</h2>
 
     <div class="temp">
         <?php echo $temperatura !== null ? $temperatura . '°' : '--'; ?>
